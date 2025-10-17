@@ -6,8 +6,14 @@ import { Console } from "@woowacourse/mission-utils";
 
 class App {
   async run() {
+    this.parser = new Parser();
+    this.calculator = new Calculator();
+
     const input = await this.getInput();
-    this.parser(input);
+    const numbers = this.parser.parse(input);
+    const result = this.calculator.add(numbers);
+
+    Console.print(`결과 : ${result}`);
   }
 
   async getInput() {
@@ -16,11 +22,22 @@ class App {
 
     return trim_Input;
   }
+}
 
-  parser(trimedInput) {
-    let numArr = [];
+class Calculator {
+  add(numbers) {
+    let sum = 0;
+    for (let arr of numbers) {
+      sum += arr;
+    }
+    return sum;
+  }
+}
+
+class Parser {
+  parse(trimedInput) {
     let temp = "";
-
+    let numArr = [];
     for (let i = 0; i < trimedInput.length; ++i) {
       const to_Char = trimedInput[i];
       Console.print(to_Char);
@@ -31,7 +48,7 @@ class App {
         numArr.push(Number(to_Char));
       }
     }
-    return Console.print(numArr);
+    return numArr;
   }
 }
 
