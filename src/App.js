@@ -40,7 +40,6 @@ class Parser {
     let numArr = [];
     for (let i = 0; i < trimedInput.length; ++i) {
       const to_Char = trimedInput[i];
-      Console.print(to_Char);
 
       if (to_Char == "," || to_Char == ":") {
         temp = "";
