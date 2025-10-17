@@ -10,12 +10,17 @@ class App {
   }
 
   async getInput() {
+    const value_Arr = [];
     const input_Value = await Console.readLineAsync("숫자를 입력하세요 : ");
-
     const trim_Input = input_Value.replaceAll(" ", "");
 
-    return Console.print(trim_Input);
+    for (let i of trim_Input) {
+      value_Arr.push(i);
+    }
+    return Console.print(value_Arr);
   }
+
+  calculate() {}
 }
 
 export default App;
