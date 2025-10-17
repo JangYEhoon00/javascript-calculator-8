@@ -6,21 +6,33 @@ import { Console } from "@woowacourse/mission-utils";
 
 class App {
   async run() {
-    this.getInput();
+    const input = await this.getInput();
+    this.parser(input);
   }
 
   async getInput() {
-    const value_Arr = [];
     const input_Value = await Console.readLineAsync("숫자를 입력하세요 : ");
     const trim_Input = input_Value.replaceAll(" ", "");
 
-    for (let i of trim_Input) {
-      value_Arr.push(i);
-    }
-    return Console.print(value_Arr);
+    return trim_Input;
   }
 
-  calculate() {}
+  parser(trimedInput) {
+    let numArr = [];
+    let temp = "";
+
+    for (let i = 0; i < trimedInput.length; ++i) {
+      const to_Char = trimedInput[i];
+      Console.print(to_Char);
+
+      if (to_Char == "," || to_Char == ":") {
+        temp = "";
+      } else {
+        numArr.push(Number(to_Char));
+      }
+    }
+    return Console.print(numArr);
+  }
 }
 
 export default App;
