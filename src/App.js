@@ -4,9 +4,9 @@ class App {
   async run() {
     this.inputCalculator = new IputCalculator();
 
-    const input = await this.inputCalculator.getInput();
-    const numbers = this.inputCalculator.parse(input);
-    const result = this.inputCalculator.add(numbers);
+    const INPUT = await this.inputCalculator.getInput();
+    const NUMBERS = this.inputCalculator.parse(INPUT);
+    const result = this.inputCalculator.add(NUMBERS);
 
     Console.print(`결과 : ${result}`);
   }
@@ -30,18 +30,20 @@ class IputCalculator {
 
   parse(trimedInput) {
     let temp = "";
-    let numArr = [];
+    const NUM_ARR = [];
+    const DELIMITE_ARR = [];
 
     for (let i = 0; i < trimedInput.length; ++i) {
-      const to_Char = trimedInput[i];
+      const TO_CHAR = trimedInput[i];
 
-      if (to_Char == "," || to_Char == ":") {
+      if (TO_CHAR == "," || TO_CHAR == ":") {
         temp = "";
       } else {
-        numArr.push(Number(to_Char));
+        temp += TO_CHAR;
+        NUM_ARR.push(Number(temp));
       }
     }
-    return numArr;
+    return NUM_ARR;
   }
 }
 
