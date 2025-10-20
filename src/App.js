@@ -28,29 +28,58 @@ class IputCalculator {
     return sum;
   }
 
-  delimited(trimInput) {
-    const DELIMITE_ARR = [",", ":"];
-    const REGEX = /^\/\/(.)\n(.*)$/;
-
-    DELIMITE_ARR.push(";");
-    return DELIMITE_ARR;
-  }
-
   parse(trimedInput) {
+    if (!trimedInput || trimedInput === "") {
+      return [0];
+    }
+    // 입력값: //;\n1,2;3
+    let delimiters = [",", ":"];
+    let numParts = trimedInput;
+    const PARTS = trimedInput.replace("\n", "\\n").split("\\n");
+
+    if (PARTS[0].slice(0, 2) === "//") {
+      const CUSTOM_DELIMITER = PARTS[0][2];
+      delimiters.push(CUSTOM_DELIMITER);
+      numParts = PARTS[1];
+    }
+
     let temp = "";
     const NUM_ARR = [];
 
-    for (let i = 0; i < trimedInput.length; ++i) {
-      const TO_CHAR = trimedInput[i];
+    for (let i = 0; i < numParts.length; ++i) {
+      const TO_CHAR = numParts[i];
 
-      if (TO_CHAR == "," || TO_CHAR == ":") {
-        NUM_ARR.push(Number(temp));
+      if (delimiters.includes(TO_CHAR)) {
+        if (temp === "") {
+          throw new Error("[ERROR] 아무 값도 입력하지 않았습니다.");
+        }
+        const parsed = Number(temp);
+        if (isNaN(parsed)) {
+          throw new Error("[ERROR] 숫자가 아닌 값이 있습니다.");
+        }
+        if (parsed < 0) {
+          throw new Error("[ERROR] 음수는 입력할 수 없습니다.");
+        }
+
+        NUM_ARR.push(parsed);
         temp = "";
       } else {
         temp += TO_CHAR;
       }
     }
-    NUM_ARR.push(Number(temp));
+
+    const checker = Number(temp);
+    if (temp === "") {
+      throw new Error("[ERROR] 아무 값도 입력하지 않았습니다.");
+    }
+    if (isNaN(checker)) {
+      throw new Error("[ERROR] 숫자가 아닌 값이 있습니다.");
+    }
+
+    if (checker < 0) {
+      throw new Error("[ERROR] 음수는 입력할 수 없습니다.");
+    }
+    NUM_ARR.push(checker);
 
     return NUM_ARR;
   }
