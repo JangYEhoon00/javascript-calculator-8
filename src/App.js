@@ -28,21 +28,30 @@ class IputCalculator {
     return sum;
   }
 
+  delimited(trimInput) {
+    const DELIMITE_ARR = [",", ":"];
+    const REGEX = /^\/\/(.)\n(.*)$/;
+
+    DELIMITE_ARR.push(";");
+    return DELIMITE_ARR;
+  }
+
   parse(trimedInput) {
     let temp = "";
     const NUM_ARR = [];
-    const DELIMITE_ARR = [];
 
     for (let i = 0; i < trimedInput.length; ++i) {
       const TO_CHAR = trimedInput[i];
 
       if (TO_CHAR == "," || TO_CHAR == ":") {
+        NUM_ARR.push(Number(temp));
         temp = "";
       } else {
         temp += TO_CHAR;
-        NUM_ARR.push(Number(temp));
       }
     }
+    NUM_ARR.push(Number(temp));
+
     return NUM_ARR;
   }
 }
